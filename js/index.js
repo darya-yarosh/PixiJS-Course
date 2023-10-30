@@ -4,6 +4,7 @@ import { TweenManager } from './Tween.js';
 import assetsMap from "./assetsMap.js";
 
 import Tank from "./Tank.js";
+import { Background } from "./Background.js";
 
 const colors = {
    black: 0x000000,
@@ -25,7 +26,18 @@ const app = new Application({
 });
 
 const runGame = () => {
-   app.stage.position.set(800 / 2, 800 / 2);
+   const background = new Background(
+      '../assets/parts/map_tiles/A.png',
+      {
+         width: 100,
+         height: 100
+      },
+      {
+         width: SCREEN_SIZE.width,
+         height: SCREEN_SIZE.height
+      }
+   );
+   app.stage.addChild(background.view);
 
    const marker = new Graphics();
    marker.beginFill(colors.red, 1);
@@ -33,6 +45,9 @@ const runGame = () => {
    marker.endFill();
 
    const tank = new Tank();
+   tank.x = 800 / 2;
+   tank.y = 800 / 2;
+
    app.stage.addChild(tank.view);
    app.stage.addChild(marker);
    
@@ -96,8 +111,7 @@ const runGame = () => {
    app.stage.on("pointerdown", moveTank, undefined);
    app.stage.interactive = true;
    app.stage.interactiveChildren = false;
-   app.stage.hitArea = new Rectangle(-400, -400, 800, 800);
-
+   app.stage.hitArea = new Rectangle(0, 0, 800, 800);
 }
 
 // Loading assets
