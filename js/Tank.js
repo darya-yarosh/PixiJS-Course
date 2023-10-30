@@ -5,6 +5,8 @@ export const createAnimatedSprite = (textureNames, position = { x: 0, y: 0 }, an
 
     const animatedSprite = new AnimatedSprite(textures);
     animatedSprite.position.copyFrom(position);
+    // anchor - для указания центра текстуры 
+    // (по умолчанию верхний левый угол).
     animatedSprite.anchor.copyFrom(anchor);
     return animatedSprite;
 };
@@ -12,7 +14,12 @@ export const createAnimatedSprite = (textureNames, position = { x: 0, y: 0 }, an
 export const createSprite = (textureName, position = { x: 0, y: 0 }, anchor = { x: 0.5, y: 0.5 }) => {
     const sprite = new Sprite(Texture.from(textureName));
     sprite.position.copyFrom(position);
-    sprite.anchor.copyFrom(anchor);
+    // anchor - для указания центра текстуры 
+    // (по умолчанию верхний левый угол).
+    animatedSprite.anchor.copyFrom(anchor);
+    // При попытке добавить в функцию создания спрайта установку
+    // скорости, спрайт по итогу не отрисовывается в окне.
+    //animatedSprite.animationSpeed = animationSpeed;
     return sprite;
 };
 
