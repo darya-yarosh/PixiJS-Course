@@ -1,20 +1,6 @@
-import { Container, AnimatedSprite, Texture, Sprite } from "./pixi.mjs";
+import { Container } from "./pixi.mjs";
 
-export const createAnimatedSprite = (textureNames, position = { x: 0, y: 0 }, anchor = { x: 0.5, y: 0.5 }) => {
-    const textures = textureNames.map(name => Texture.from(name));
-
-    const animatedSprite = new AnimatedSprite(textures);
-    animatedSprite.position.copyFrom(position);
-    animatedSprite.anchor.copyFrom(anchor);
-    return animatedSprite;
-};
-
-export const createSprite = (textureName, position = { x: 0, y: 0 }, anchor = { x: 0.5, y: 0.5 }) => {
-    const sprite = new Sprite(Texture.from(textureName));
-    sprite.position.copyFrom(position);
-    sprite.anchor.copyFrom(anchor);
-    return sprite;
-};
+import { createAnimatedSprite, createSprite } from "../js/helper.js";
 
 export default class Tank {
     constructor() {
