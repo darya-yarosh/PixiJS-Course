@@ -1,4 +1,4 @@
-import { Application, Graphics, Rectangle } from "./pixi.mjs";
+import { Application, Graphics, Rectangle, Text, TextStyle } from "./pixi.mjs";
 import { TweenManager } from './Tween.js';
 
 import assetsMap from "./assetsMap.js";
@@ -39,6 +39,14 @@ const runGame = () => {
    );
    app.stage.addChild(background.view);
 
+   let textStyle = new TextStyle({
+      fontFamily: "Arial",
+      fontSize: 32,
+      fill: "white",
+      dropShadow: true,
+      dropShadowColor: "black",
+   })
+
    const marker = new Graphics();
    marker.beginFill(colors.red, 1);
    marker.drawCircle(0, 0, 5);
@@ -48,8 +56,16 @@ const runGame = () => {
    tank.x = 800 / 2;
    tank.y = 800 / 2;
 
+   let instructionText = new Text(
+      "Kyeboard: \nMouse button - move the tank.\nNum 1 - change tracks;\nNum 2 - change tower;\nNum 3 - change hull.", 
+      textStyle
+   );
+   instructionText.x = 15;
+   instructionText.y = 15;
+
    app.stage.addChild(tank.view);
    app.stage.addChild(marker);
+   app.stage.addChild(instructionText);
    
    window["TANK"] = tank;
 
@@ -112,6 +128,40 @@ const runGame = () => {
    app.stage.interactive = true;
    app.stage.interactiveChildren = false;
    app.stage.hitArea = new Rectangle(0, 0, 800, 800);
+
+   const tracksTypes = ["A", "B", "C"];
+   let trackTypeInd = 0;
+
+   const towerTypes = ["Small", "Medium", "Heavy"];
+   let towerTypeInd = 0;
+
+   const hullTypes = ["Small", "Medium", "Heavy"];
+   let hullTypeInd = 0;
+   
+   function handlerKeyDown(event) {
+      switch (event.code) {
+         case ("Digit1"): {
+            trackTypeInd = trackTypeInd + 1 > 2 ? 0 : trackTypeInd + 1;
+            tank.changeTracks(tracksTypes[trackTypeInd]);
+            break;
+         }
+         case ("Digit2"): {
+            towerTypeInd = towerTypeInd + 1 > 2 ? 0 : towerTypeInd + 1;
+            tank.changeTower(towerTypes[towerTypeInd]);
+            break;
+         }
+         case ("Digit3"): {
+            hullTypeInd = hullTypeInd + 1 > 2 ? 0 : hullTypeInd + 1;
+            tank.changeHull(hullTypes[hullTypeInd]);
+            break;
+         }
+         default: {
+            break;
+         }
+      }
+   }
+
+   addEventListener("keydown", handlerKeyDown);
 }
 
 // Loading assets
